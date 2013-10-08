@@ -1,0 +1,18 @@
+Version 3.2 2012-04-02:  (Roby73)
+===================================
+- integrated bigdump script
+
+Version 3.1 2012-04-02:  (Roby73)
+===================================
+- Conversion to XOOPS 2.5.5 Admin GUI
+- other modifications
+
+Version 3.0 2012-04-02:  (D.J. aka phppp)
+===================================
+- adding restore (bigdump) by Alexey Ozerov (alexey at ozerov dot de)
+
+
+Version 2.0:  (Peter Nagl)
+===================================
+- original release -- Peter Nagl webmaster@nagl.ch ( http://www.nagl.ch )
+
