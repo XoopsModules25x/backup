@@ -5,8 +5,8 @@
 // Even through the webservers with hard runtime limit and those in safe mode
 // Works fine with Internet Explorer 7.0 and Firefox 2.x
 
-// Author:       Alexey Ozerov (alexey at ozerov dot de) 
-//               AJAX & CSV functionalities: Krzysiek Herod (kr81uni at wp dot pl) 
+// Author:       Alexey Ozerov (alexey at ozerov dot de)
+//               AJAX & CSV functionalities: Krzysiek Herod (kr81uni at wp dot pl)
 // Copyright:    GPL (C) 2003-2011
 // More Infos:   http://www.ozerov.de/bigdump
 
@@ -46,7 +46,7 @@ require_once(XOOPS_ROOT_PATH . "/modules/backup/include/functions.php");
 if ( isset($_COOKIE['db_name']) && isset($_COOKIE['c_set'])) {
 $c_set = $_COOKIE['c_set'];
 $db_name=$_COOKIE['db_name'];
-$charset=($c_set=='utf8')?'latin1':''; 
+$charset=($c_set=='utf8')?'latin1':'';
 } else {
 redirect_header('index.php', 3, _NOPERM);
 exit;
@@ -126,7 +126,7 @@ if (function_exists("date_default_timezone_set") && function_exists("date_defaul
 
 // Clean and strip anything we don't want from user's input [0.27b]
 
-foreach ($_REQUEST as $key => $val) 
+foreach ($_REQUEST as $key => $val)
 {
   $val = preg_replace("/[^_A-Za-z0-9-\.&= ;\$]/i",'', $val);
   $_REQUEST[$key] = $val;
@@ -154,7 +154,7 @@ body
 { background-color:#FFFFF0;
 }
 
-h1 
+h1
 { font-size:20px;
   line-height:24px;
   font-family:Arial,Helvetica,sans-serif;
@@ -173,7 +173,7 @@ p,td,th
 }
 
 p.centr
-{ 
+{
   text-align:center;
 }
 
@@ -322,7 +322,7 @@ if (!$error)
 
 if (!$error && isset($_REQUEST["uploadbutton"]))
 { if (is_uploaded_file($_FILES["dumpfile"]["tmp_name"]) && ($_FILES["dumpfile"]["error"])==0)
-  { 
+  {
     $uploaded_filename=str_replace(" ","_",$_FILES["dumpfile"]["name"]);
     $uploaded_filename=preg_replace("/[^_A-Za-z0-9-\.]/i",'',$uploaded_filename);
     $uploaded_filepath=str_replace("\\","/",$upload_dir."/".$uploaded_filename);
@@ -346,7 +346,6 @@ if (!$error && isset($_REQUEST["uploadbutton"]))
   }
 }
 
-
 // Handle file deletion (delete only in the current directory for security reasons)
 
 if (!$error && isset($_REQUEST["delete"]) && $_REQUEST["delete"]!=basename($_SERVER["SCRIPT_FILENAME"]))
@@ -360,10 +359,10 @@ if (!$error && isset($_REQUEST["delete"]) && $_REQUEST["delete"]!=basename($_SER
 
 if (!$error && !TESTMODE)
 { $dbconnection = $xoopsDB->conn;
-  if ($dbconnection) 
+  if ($dbconnection)
     $db = mysql_select_db($db_name);
 @mysql_query("SET character_set_results = '$c_set', character_set_client = '$c_set', character_set_connection = '$c_set', character_set_database = '$c_set', character_set_server = '$c_set'");
-  if (!$dbconnection || !$db) 
+  if (!$dbconnection || !$db)
   { echo ("<p class=\"error\">Database connection failed due to ".mysql_error()."</p>\n");
     echo ("<p>Edit the database settings in ".$_SERVER["SCRIPT_FILENAME"]." or contact your database provider.</p>\n");
     $error=true;
@@ -374,12 +373,12 @@ if (!$error && !TESTMODE)
   if (!$error && isset ($pre_query) && sizeof ($pre_query)>0)
   { reset($pre_query);
     foreach ($pre_query as $pre_query_value)
-    {	if (!@mysql_query($pre_query_value, $dbconnection))
-    	{ echo ("<p class=\"error\">Error with pre-query.</p>\n");
-      	echo ("<p>Query: ".trim(nl2br(htmlentities($pre_query_value)))."</p>\n");
-      	echo ("<p>MySQL: ".mysql_error()."</p>\n");
-      	$error=true;
-      	break;
+    {    if (!@mysql_query($pre_query_value, $dbconnection))
+        { echo ("<p class=\"error\">Error with pre-query.</p>\n");
+          echo ("<p>Query: ".trim(nl2br(htmlentities($pre_query_value)))."</p>\n");
+          echo ("<p>MySQL: ".mysql_error()."</p>\n");
+          $error=true;
+          break;
      }
     }
   }
@@ -388,25 +387,24 @@ else
 { $dbconnection = false;
 }
 
-
 // DIAGNOSTIC
 // echo("<h1>Checkpoint!</h1>");
 
 // List uploaded files in multifile mode
 
 if (!$error && !isset($_REQUEST["fn"]) && $filename=="")
-{ if ($dirhandle = opendir($upload_dir)) 
-  { 
+{ if ($dirhandle = opendir($upload_dir))
+  {
     $files=array();
     while (false !== ($files[] = readdir($dirhandle)));
     closedir($dirhandle);
     $dirhead=false;
 
     if (sizeof($files)>0)
-    { 
+    {
       sort($files);
       foreach ($files as $dirfile)
-      { 
+      {
         if ($dirfile != "." && $dirfile != ".." && $dirfile!=basename($_SERVER["SCRIPT_FILENAME"]) && preg_match("/\.(sql|gz|csv)$/i",$dirfile))
         { if (!$dirhead)
           { echo ("<table width=\"100%\" cellspacing=\"2\" cellpadding=\"2\">\n");
@@ -432,9 +430,9 @@ if (!$error && !isset($_REQUEST["fn"]) && $filename=="")
       }
     }
 
-    if ($dirhead) 
+    if ($dirhead)
       echo ("</table>\n");
-    else 
+    else
       echo ("<p>No uploaded SQL, GZ or CSV files found in the working directory</p>\n");
   }
   else
@@ -443,18 +441,16 @@ if (!$error && !isset($_REQUEST["fn"]) && $filename=="")
   }
 }
 
-
 // Single file mode
 
 if (!$error && !isset ($_REQUEST["fn"]) && $filename!="")
 { echo ("<p><a href=\"".$_SERVER["PHP_SELF"]."?start=1&amp;fn=".urlencode($filename)."&amp;foffset=0&amp;totalqueries=0\">Start Import</a> from $filename into $db_name</p>\n");
 }
 
-
 // File Upload Form
 
 if (!$error && !isset($_REQUEST["fn"]) && $filename=="")
-{ 
+{
 
 // Test permissions on working directory
 
@@ -482,10 +478,10 @@ if (!$error && !isset($_REQUEST["fn"]) && $filename=="")
 // Print the current mySQL connection charset
 
 if (!$error && !TESTMODE && !isset($_REQUEST["fn"]))
-{ 
+{
   $result = mysql_query("SHOW VARIABLES LIKE 'character_set_connection';");
   $row = mysql_fetch_assoc($result);
-  if ($row) 
+  if ($row)
   { $charset = $row['Value'];
     echo ("<p>Note: The current mySQL connection charset is <i>$charset</i>. Your dump file must be encoded in <i>$charset</i> in order to avoid problems with non-latin characters. You can change the connection charset using the \$db_connection_charset variable in bigdump.php</p>\n");
   }
@@ -494,7 +490,7 @@ if (!$error && !TESTMODE && !isset($_REQUEST["fn"]))
 // Open the file
 
 if (!$error && isset($_REQUEST["start"]))
-{ 
+{
 
 // Set current filename ($filename overrides $_REQUEST["fn"] if set)
 
@@ -507,7 +503,7 @@ if (!$error && isset($_REQUEST["start"]))
 
 // Recognize GZip filename
 
-  if (preg_match("/\.gz$/i",$curfilename)) 
+  if (preg_match("/\.gz$/i",$curfilename))
     $gzipmode=true;
   else
     $gzipmode=false;
@@ -539,7 +535,6 @@ if (($csv_insert_table == "") && (preg_match("/(\.csv)$/i",$curfilename)))
   $error=true;
 }
 
-
 // *******************************************************************************************
 // START IMPORT SESSION HERE
 // *******************************************************************************************
@@ -554,7 +549,7 @@ if (!$error && isset($_REQUEST["start"]) && isset($_REQUEST["foffset"]) && preg_
     $error=true;
   }
   else
-  {	$_REQUEST["start"]   = floor($_REQUEST["start"]);
+  {    $_REQUEST["start"]   = floor($_REQUEST["start"]);
     $_REQUEST["foffset"] = floor($_REQUEST["foffset"]);
   }
 
@@ -566,7 +561,7 @@ if (!$error && isset($_REQUEST["start"]) && isset($_REQUEST["foffset"]) && preg_
 // Empty CSV table if requested
 
   if (!$error && $_REQUEST["start"]==1 && $csv_insert_table != "" && $csv_preempty_table)
-  { 
+  {
     $query = "DELETE FROM $csv_insert_table";
     if (!TESTMODE && !mysql_query(trim($query), $dbconnection))
     { echo ("<p class=\"error\">Error when deleting entries from $csv_insert_table.</p>\n");
@@ -580,10 +575,10 @@ if (!$error && isset($_REQUEST["start"]) && isset($_REQUEST["foffset"]) && preg_
 
   if (!$error)
   { skin_open();
-    if (TESTMODE) 
+    if (TESTMODE)
       echo ("<p class=\"centr\">TEST MODE ENABLED</p>\n");
     echo ("<p class=\"centr\">Processing file: <b>".$curfilename."</b></p>\n");
-    echo ("<p class=\"smlcentr\">Starting from line: ".$_REQUEST["start"]."</p>\n");	
+    echo ("<p class=\"smlcentr\">Starting from line: ".$_REQUEST["start"]."</p>\n");
     skin_close();
   }
 
@@ -665,7 +660,7 @@ if (!$error && isset($_REQUEST["start"]) && isset($_REQUEST["foffset"]) && preg_
       { $skipline=false;
         reset($comment);
         foreach ($comment as $comment_value)
-        { 
+        {
 
 // DIAGNOSTIC
 //          echo ($comment_value);
@@ -725,7 +720,7 @@ if (!$error && isset($_REQUEST["start"]) && isset($_REQUEST["foffset"]) && preg_
 // echo ("<p>Line: $dumpline</p>\n");
 
       if (preg_match('/'.preg_quote($delimiter).'$/',trim($dumpline)) && !$inparents)
-      { 
+      {
 
 // Cut off delimiter of the end of the query
 
@@ -753,7 +748,7 @@ if (!$error && isset($_REQUEST["start"]) && isset($_REQUEST["foffset"]) && preg_
 // Get the current file position
 
   if (!$error)
-  { if (!$gzipmode) 
+  { if (!$gzipmode)
       $foffset = ftell($file);
     else
       $foffset = gztell($file);
@@ -770,7 +765,7 @@ skin_open();
 // echo ("<p class=\"centr\"><b>Statistics</b></p>\n");
 
   if (!$error)
-  { 
+  {
     $lines_this   = $linenumber-$_REQUEST["start"];
     $lines_done   = $linenumber-1;
     $lines_togo   = ' ? ';
@@ -802,11 +797,11 @@ skin_open();
       $pct_togo   = 100 - $pct_done;
       $pct_tota   = 100;
 
-      if ($bytes_togo==0) 
-      { $lines_togo   = '0'; 
-        $lines_tota   = $linenumber-1; 
-        $queries_togo = '0'; 
-        $queries_tota = $totalqueries; 
+      if ($bytes_togo==0)
+      { $lines_togo   = '0';
+        $lines_tota   = $linenumber-1;
+        $queries_togo = '0';
+        $queries_tota = $totalqueries;
       }
 
       $pct_bar    = "<div style=\"height:15px;width:$pct_done%;background-color:#000080;margin:0px;\"></div>";
@@ -865,14 +860,14 @@ skin_open();
 </form>
 <!-- End Paypal donation code -->
 
-<?php      
+<?php
 
       $error=true; // This is a semi-error telling the script is finished
     }
     else
     { if ($delaypersession!=0)
         echo ("<p class=\"centr\">Now I'm <b>waiting $delaypersession milliseconds</b> before starting next session...</p>\n");
-      if (!$ajax) 
+      if (!$ajax)
         echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout('location.href=\"".$_SERVER["PHP_SELF"]."?start=$linenumber&fn=".urlencode($curfilename)."&foffset=$foffset&totalqueries=$totalqueries&delimiter=".urlencode($delimiter)."\";',500+$delaypersession);</script>\n");
 
       echo ("<noscript>\n");
@@ -882,7 +877,7 @@ skin_open();
       echo ("<p class=\"centr\">Press <b><a href=\"".$_SERVER["PHP_SELF"]."\">STOP</a></b> to abort the import <b>OR WAIT!</b></p>\n");
     }
   }
-  else 
+  else
     echo ("<p class=\"error\">Stopped on error</p>\n");
 
 skin_close();
@@ -911,7 +906,7 @@ else if ($file && $gzipmode) gzclose($file);
 include 'admin_footer.php';
 // If error or finished put out the whole output from above and stop
 
-if ($error) 
+if ($error)
 {
   $out1 = ob_get_contents();
   ob_end_clean();
@@ -923,13 +918,13 @@ if ($error)
 
 if ($ajax && isset($_REQUEST['start']))
 {
-  if (isset($_REQUEST['ajaxrequest'])) 
-  {	ob_end_clean();
-	create_xml_response();
-	die;
-  } 
-  else 
-    create_ajax_script();	  
+  if (isset($_REQUEST['ajaxrequest']))
+  {    ob_end_clean();
+    create_xml_response();
+    die;
+  }
+  else
+    create_ajax_script();
 }
 
 // Anyway put out the output from above
@@ -943,73 +938,72 @@ ob_flush();
 // 				AJAX utilities
 // *******************************************************************************************
 
-function create_xml_response() 
+function create_xml_response()
 {
   global $linenumber, $foffset, $totalqueries, $curfilename, $delimiter,
-				 $lines_this, $lines_done, $lines_togo, $lines_tota,
-				 $queries_this, $queries_done, $queries_togo, $queries_tota,
-				 $bytes_this, $bytes_done, $bytes_togo, $bytes_tota,
-				 $kbytes_this, $kbytes_done, $kbytes_togo, $kbytes_tota,
-				 $mbytes_this, $mbytes_done, $mbytes_togo, $mbytes_tota,
-				 $pct_this, $pct_done, $pct_togo, $pct_tota,$pct_bar;
+                 $lines_this, $lines_done, $lines_togo, $lines_tota,
+                 $queries_this, $queries_done, $queries_togo, $queries_tota,
+                 $bytes_this, $bytes_done, $bytes_togo, $bytes_tota,
+                 $kbytes_this, $kbytes_done, $kbytes_togo, $kbytes_tota,
+                 $mbytes_this, $mbytes_done, $mbytes_togo, $mbytes_tota,
+                 $pct_this, $pct_done, $pct_togo, $pct_tota,$pct_bar;
 
-	header('Content-Type: application/xml');
-	header('Cache-Control: no-cache');
-	
-	echo '<?xml version="1.0" encoding="ISO-8859-1"?>';
-	echo "<root>";
+    header('Content-Type: application/xml');
+    header('Cache-Control: no-cache');
+    
+    echo '<?xml version="1.0" encoding="ISO-8859-1"?>';
+    echo "<root>";
 
 // data - for calculations
 
-	echo "<linenumber>$linenumber</linenumber>";
-	echo "<foffset>$foffset</foffset>";
-	echo "<fn>$curfilename</fn>";
-	echo "<totalqueries>$totalqueries</totalqueries>";
-	echo "<delimiter>$delimiter</delimiter>";
+    echo "<linenumber>$linenumber</linenumber>";
+    echo "<foffset>$foffset</foffset>";
+    echo "<fn>$curfilename</fn>";
+    echo "<totalqueries>$totalqueries</totalqueries>";
+    echo "<delimiter>$delimiter</delimiter>";
 
 // results - for page update
 
-	echo "<elem1>$lines_this</elem1>";
-	echo "<elem2>$lines_done</elem2>";
-	echo "<elem3>$lines_togo</elem3>";
-	echo "<elem4>$lines_tota</elem4>";
-	
-	echo "<elem5>$queries_this</elem5>";
-	echo "<elem6>$queries_done</elem6>";
-	echo "<elem7>$queries_togo</elem7>";
-	echo "<elem8>$queries_tota</elem8>";
-	
-	echo "<elem9>$bytes_this</elem9>";
-	echo "<elem10>$bytes_done</elem10>";
-	echo "<elem11>$bytes_togo</elem11>";
-	echo "<elem12>$bytes_tota</elem12>";
-			
-	echo "<elem13>$kbytes_this</elem13>";
-	echo "<elem14>$kbytes_done</elem14>";
-	echo "<elem15>$kbytes_togo</elem15>";
-	echo "<elem16>$kbytes_tota</elem16>";
-	
-	echo "<elem17>$mbytes_this</elem17>";
-	echo "<elem18>$mbytes_done</elem18>";
-	echo "<elem19>$mbytes_togo</elem19>";
-	echo "<elem20>$mbytes_tota</elem20>";
-	
-	echo "<elem21>$pct_this</elem21>";
-	echo "<elem22>$pct_done</elem22>";
-	echo "<elem23>$pct_togo</elem23>";
-	echo "<elem24>$pct_tota</elem24>";
-	echo "<elem_bar>".htmlentities($pct_bar)."</elem_bar>";
-				
-	echo "</root>";		
+    echo "<elem1>$lines_this</elem1>";
+    echo "<elem2>$lines_done</elem2>";
+    echo "<elem3>$lines_togo</elem3>";
+    echo "<elem4>$lines_tota</elem4>";
+    
+    echo "<elem5>$queries_this</elem5>";
+    echo "<elem6>$queries_done</elem6>";
+    echo "<elem7>$queries_togo</elem7>";
+    echo "<elem8>$queries_tota</elem8>";
+    
+    echo "<elem9>$bytes_this</elem9>";
+    echo "<elem10>$bytes_done</elem10>";
+    echo "<elem11>$bytes_togo</elem11>";
+    echo "<elem12>$bytes_tota</elem12>";
+            
+    echo "<elem13>$kbytes_this</elem13>";
+    echo "<elem14>$kbytes_done</elem14>";
+    echo "<elem15>$kbytes_togo</elem15>";
+    echo "<elem16>$kbytes_tota</elem16>";
+    
+    echo "<elem17>$mbytes_this</elem17>";
+    echo "<elem18>$mbytes_done</elem18>";
+    echo "<elem19>$mbytes_togo</elem19>";
+    echo "<elem20>$mbytes_tota</elem20>";
+    
+    echo "<elem21>$pct_this</elem21>";
+    echo "<elem22>$pct_done</elem22>";
+    echo "<elem23>$pct_togo</elem23>";
+    echo "<elem24>$pct_tota</elem24>";
+    echo "<elem_bar>".htmlentities($pct_bar)."</elem_bar>";
+                
+    echo "</root>";
 }
 
-
-function create_ajax_script() 
+function create_ajax_script()
 {
   global $linenumber, $foffset, $totalqueries, $delaypersession, $curfilename, $delimiter;
 ?>
 
-	<script type="text/javascript" language="javascript">			
+	<script type="text/javascript" language="javascript">
 
 	// creates next action url (upload page, or XML response)
 	function get_url(linenumber,fn,foffset,totalqueries,delimiter) {
@@ -1023,13 +1017,13 @@ function create_ajax_script()
 	
 	function makeRequest(url) {
 		http_request = false;
-		if (window.XMLHttpRequest) { 
+		if (window.XMLHttpRequest) {
 		// Mozilla etc.
 			http_request = new XMLHttpRequest();
 			if (http_request.overrideMimeType) {
 				http_request.overrideMimeType("text/xml");
 			}
-		} else if (window.ActiveXObject) { 
+		} else if (window.ActiveXObject) {
 		// IE
 			try {
 				http_request = new ActiveXObject("Msxml2.XMLHTTP");
@@ -1048,14 +1042,14 @@ function create_ajax_script()
 		http_request.send(null);
 	}
 	
-	function server_response() 
+	function server_response()
 	{
 
 	  // waiting for correct response
 	  if (http_request.readyState != 4)
 		return;
 
-	  if (http_request.status != 200) 
+	  if (http_request.status != 200)
 	  {
 	    alert("Page unavailable, or wrong url!")
 	    return;
@@ -1065,17 +1059,17 @@ function create_ajax_script()
 		var r = http_request.responseXML;
 		
 		//if received not XML but HTML with new page to show
-		if (!r || r.getElementsByTagName('root').length == 0) 
+		if (!r || r.getElementsByTagName('root').length == 0)
 		{	var text = http_request.responseText;
 			document.open();
-			document.write(text);		
-			document.close();	
-			return;		
+			document.write(text);
+			document.close();
+			return;
 		}
 		
 		// update "Starting from line: "
-		document.getElementsByTagName('p').item(1).innerHTML = 
-			"Starting from line: " + 
+		document.getElementsByTagName('p').item(1).innerHTML =
+			"Starting from line: " +
 			   r.getElementsByTagName('linenumber').item(0).firstChild.nodeValue;
 		
 		// update table with new values
@@ -1083,10 +1077,10 @@ function create_ajax_script()
 			document.getElementsByTagName('td').item(i).firstChild.data = get_xml_data('elem'+i,r);
 		
 		// update color bar
-		document.getElementsByTagName('td').item(25).innerHTML = 
+		document.getElementsByTagName('td').item(25).innerHTML =
 			r.getElementsByTagName('elem_bar').item(0).firstChild.nodeValue;
 			 
-		// action url (XML response)	 
+		// action url (XML response)
 		url_request =  get_url(
 			get_xml_data('linenumber',r),
 			get_xml_data('fn',r),
@@ -1094,7 +1088,7 @@ function create_ajax_script()
 			get_xml_data('totalqueries',r),
 			get_xml_data('delimiter',r));
 		
-		// ask for XML response	
+		// ask for XML response
 		window.setTimeout("makeRequest(url_request)",500+<?php echo $delaypersession; ?>);
 	}
 

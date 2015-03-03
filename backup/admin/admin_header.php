@@ -12,7 +12,6 @@ if ( file_exists($GLOBALS['xoops']->path('/Frameworks/moduleclasses/moduleadmin/
         //return false;
     }
 
-
 $moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
 $pathIcon16 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons16');
 $pathIcon32 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons32');
@@ -28,4 +27,3 @@ if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
 xoops_loadLanguage('admin', $xoopsModule->getVar("dirname"));
 xoops_loadLanguage('modinfo', $xoopsModule->getVar("dirname"));
 xoops_loadLanguage('main', $xoopsModule->getVar("dirname"));
-?>

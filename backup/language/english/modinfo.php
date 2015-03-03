@@ -44,4 +44,3 @@ define("_MI_BACKUP_ADMENU6_DESC","View table content");
 define("_MI_BACKUP_ADMENU7","Delete Database");
 define("_MI_BACKUP_ADMIN_ABOUT" , "About");
 define("_MI_BACKUP_ADMIN_ABOUT_DESC" , "About this module");
-?>

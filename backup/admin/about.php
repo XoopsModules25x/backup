@@ -11,5 +11,3 @@ echo $aboutAdmin->addNavigation('about.php');
 echo $aboutAdmin->renderabout('6KJ7RW5DR3VTJ', false);
 
 include 'admin_footer.php';
-
-?>

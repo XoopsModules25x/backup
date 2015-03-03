@@ -30,56 +30,59 @@
 
 function backup_export($configs=null)
 {
-	if(!is_array($configs) || count($configs)==0){
-		$module_handler =& xoops_gethandler('module');
-		$xoopsModule =& $module_handler->getByDirname('backup');
-		$config_handler = & xoops_gethandler( 'config' );
-		$configs = & $config_handler->getConfigsByCat( 0, $xoopsModule->getVar( 'mid' ) );
-	}
-	if(!is_array($configs) || count($configs)==0){
-		return false;
-	}
-	
-	$export_file = XOOPS_CACHE_PATH.'/backup.php';
-	if(!$fp = fopen($export_file,'w')) {
-		echo "<br /> the update file can not be created";
-		return false;
-	}
-	$file_content = "<?php";
-	$file_content .= "\n	return \$config = '".serialize($configs)."';\n";
-	$file_content .= "?>";
+    if(!is_array($configs) || count($configs)==0){
+        $module_handler =& xoops_gethandler('module');
+        $xoopsModule =& $module_handler->getByDirname('backup');
+        $config_handler = & xoops_gethandler( 'config' );
+        $configs = & $config_handler->getConfigsByCat( 0, $xoopsModule->getVar( 'mid' ) );
+    }
+    if(!is_array($configs) || count($configs)==0){
+        return false;
+    }
+    
+    $export_file = XOOPS_CACHE_PATH.'/backup.php';
+    if(!$fp = fopen($export_file,'w')) {
+        echo "<br /> the update file can not be created";
+
+        return false;
+    }
+    $file_content = "<?php";
+    $file_content .= "\n	return \$config = '".serialize($configs)."';\n";
+    $file_content .= "?>";
     fputs($fp,$file_content);
     fclose($fp);
-	return true;
+
+    return true;
 }
 
 function &backup_import()
 {
-	$import_file = XOOPS_CACHE_PATH.'/backup.php';
-	if(!is_readable($import_file) && !backup_export()) {
-		echo "<br />the imported file can not be read: ".$import_file;
-		return false;
-	}
-	$config = include($import_file);
-	$configs = unserialize($config);
-	return $configs;
+    $import_file = XOOPS_CACHE_PATH.'/backup.php';
+    if(!is_readable($import_file) && !backup_export()) {
+        echo "<br />the imported file can not be read: ".$import_file;
+
+        return false;
+    }
+    $config = include($import_file);
+    $configs = unserialize($config);
+
+    return $configs;
 }
 
 function drop_table($datbase,$c_set)
 {
-	@mysql_select_db($datbase); 
-	$sql = "SHOW TABLES FROM ".$datbase;
-	$tables = mysql_query($sql);
-	$num_tables = @mysql_numrows($tables);
-	if($num_tables>0) {
-	for($i=0; $i<$num_tables; $i++){
-		$name = mysql_tablename($tables, $i);
-		$narray[]=$name;
-		}
-	$sql = implode(', ', $narray);
+    @mysql_select_db($datbase);
+    $sql = "SHOW TABLES FROM ".$datbase;
+    $tables = mysql_query($sql);
+    $num_tables = @mysql_numrows($tables);
+    if($num_tables>0) {
+    for($i=0; $i<$num_tables; $i++){
+        $name = mysql_tablename($tables, $i);
+        $narray[]=$name;
+        }
+    $sql = implode(', ', $narray);
 
-	@mysql_query("DROP TABLE $sql");
-	}
-	@mysql_query("ALTER DATABASE $datbase charset=".$c_set);
+    @mysql_query("DROP TABLE $sql");
+    }
+    @mysql_query("ALTER DATABASE $datbase charset=".$c_set);
 }
-?>

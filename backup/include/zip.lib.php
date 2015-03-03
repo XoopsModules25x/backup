@@ -1,7 +1,6 @@
 <?php
 /* $Id: zip.lib.php,v 1.6 2002/03/30 08:24:04 loic1 Exp $ */
 
-
 /**
  * Zip file creation class.
  * Makes zip files.
@@ -26,31 +25,30 @@ class zipfile
     /**
      * Array to store compressed data
      *
-     * @var  array    $datasec
+     * @var array $datasec
      */
     var $datasec      = array();
 
     /**
      * Central directory
      *
-     * @var  array    $ctrl_dir
+     * @var array $ctrl_dir
      */
     var $ctrl_dir     = array();
 
     /**
      * End of central directory record
      *
-     * @var  string   $eof_ctrl_dir
+     * @var string $eof_ctrl_dir
      */
     var $eof_ctrl_dir = "\x50\x4b\x05\x06\x00\x00\x00\x00";
 
     /**
      * Last offset position
      *
-     * @var  integer  $old_offset
+     * @var integer $old_offset
      */
     var $old_offset   = 0;
-
 
     /**
      * Converts an Unix timestamp to a four byte DOS date and time format (date
@@ -58,7 +56,7 @@ class zipfile
      *
      * @param  integer  the current Unix timestamp
      *
-     * @return integer  the current date in a four byte DOS format
+     * @return integer the current date in a four byte DOS format
      *
      * @access private
      */
@@ -66,12 +64,12 @@ class zipfile
         $timearray = ($unixtime == 0) ? getdate() : getdate($unixtime);
 
         if ($timearray['year'] < 1980) {
-        	$timearray['year']    = 1980;
-        	$timearray['mon']     = 1;
-        	$timearray['mday']    = 1;
-        	$timearray['hours']   = 0;
-        	$timearray['minutes'] = 0;
-        	$timearray['seconds'] = 0;
+            $timearray['year']    = 1980;
+            $timearray['mon']     = 1;
+            $timearray['mday']    = 1;
+            $timearray['hours']   = 0;
+            $timearray['minutes'] = 0;
+            $timearray['seconds'] = 0;
         } // end if
 
         return (($timearray['year'] - 1980) << 25) | ($timearray['mon'] << 21) | ($timearray['mday'] << 16) |
@@ -162,7 +160,7 @@ class zipfile
     /**
      * Dumps out file
      *
-     * @return  string  the zipped file
+     * @return string the zipped file
      *
      * @access public
      */
@@ -183,4 +181,4 @@ class zipfile
     } // end of the 'file()' method
 
 } // end of the 'zipfile' class
-?>
+;
