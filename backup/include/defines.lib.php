@@ -54,11 +54,9 @@ if (!defined('PMA_MYSQL_INT_VERSION')) {
 $result=mysql_fetch_object($sql);
 $match = explode('.', $result->verion);
 
-
     define('PMA_MYSQL_INT_VERSION', (int)sprintf('%d%02d%02d', $match[0], $match[1], intval($match[2])));
     unset($match);
 }
-
 
 // Determines platform (OS), browser and version of the user
 // Based on a phpBuilder article:
@@ -110,4 +108,4 @@ if (!defined('PMA_USR_OS')) {
         define('PMA_USR_BROWSER_AGENT', 'OTHER');
     }
 } // $__PMA_DEFINES_LIB__
-?>
+;

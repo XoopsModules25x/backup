@@ -31,54 +31,52 @@ include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
     xoops_cp_header();
     $indexAdmin = new ModuleAdmin();
     echo $indexAdmin->addNavigation('other.php');
-	if (!empty($_POST['db_name'])) {
-	$db 		= $_POST['db_name'];
+    if (!empty($_POST['db_name'])) {
+    $db        = $_POST['db_name'];
 
-		$db_selected = mysql_select_db($db);
-		if (!$db_selected) {
-  		redirect_header('other.php', 3, 'Database not exist');
-		}
+        $db_selected = mysql_select_db($db);
+        if (!$db_selected) {
+        redirect_header('other.php', 3, 'Database not exist');
+        }
 
-	$sql 		= "SHOW TABLES FROM $db";
-	$tables 	= mysql_query($sql);
-	$num_tables = @mysql_numrows($tables);
-	$value = $db."<br />";	
+    $sql        = "SHOW TABLES FROM $db";
+    $tables    = mysql_query($sql);
+    $num_tables = @mysql_numrows($tables);
+    $value = $db."<br />";
 
-	$options = array(0=>_NONE, 1=>_ALL);
-	for($i=0; $i<$num_tables; $i++){
-		$name = mysql_tablename($tables, $i);
-		$options[$name] = $name;
-	}
+    $options = array(0=>_NONE, 1=>_ALL);
+    for($i=0; $i<$num_tables; $i++){
+        $name = mysql_tablename($tables, $i);
+        $options[$name] = $name;
+    }
 
-	$val=mysql_query("show variables like 'character%'");
-	while($re=mysql_fetch_array($val)) {
-	$value.=$re['Variable_name']." ".$re['Value']."<br />";
-	}
-	$sform = new XoopsThemeForm(_DB_BACKUP_TITLE, 'name', 'backup.php?oldurl='.$_SERVER['PHP_SELF'].'&db_name='.$db, 'post');
-    	$tab_select = new XoopsFormSelect(_DB_TABLES, 'tables', null, 6,true);
-    	$tab_select->addOptionArray($options);
-   	$sform->addElement($tab_select, true);
-	$tarea = new XoopsFormLabel($value);
-	$sform->addElement($tarea);
-	$button_tray = new XoopsFormElementTray('' ,'');
-	$submit_btn = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
-	$button_tray->addElement($submit_btn);
-	$sform->addElement($button_tray);
-	$sform->display();
-	} else {
+    $val=mysql_query("show variables like 'character%'");
+    while($re=mysql_fetch_array($val)) {
+    $value.=$re['Variable_name']." ".$re['Value']."<br />";
+    }
+    $sform = new XoopsThemeForm(_DB_BACKUP_TITLE, 'name', 'backup.php?oldurl='.$_SERVER['PHP_SELF'].'&db_name='.$db, 'post');
+        $tab_select = new XoopsFormSelect(_DB_TABLES, 'tables', null, 6,true);
+        $tab_select->addOptionArray($options);
+    $sform->addElement($tab_select, true);
+    $tarea = new XoopsFormLabel($value);
+    $sform->addElement($tarea);
+    $button_tray = new XoopsFormElementTray('' ,'');
+    $submit_btn = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
+    $button_tray->addElement($submit_btn);
+    $sform->addElement($button_tray);
+    $sform->display();
+    } else {
 
-	$sform = new XoopsThemeForm(_DB_BACKUP_TITLE, 'name', 'other.php', 'post');
-	$sform->addElement(new XoopsFormText(_DB_DBASE, 'db_name', 50, 255, ""), true);
-	$button_tray = new XoopsFormElementTray('' ,'');
-	$submit_btn = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
-	$button_tray->addElement($submit_btn);
-	$sform->addElement($button_tray);
-	$sform->display();
-	}
-	//$submit_btn = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
-	//$button_tray->addElement($submit_btn);
-	//$sform->addElement($button_tray);
-	//$sform->display();
+    $sform = new XoopsThemeForm(_DB_BACKUP_TITLE, 'name', 'other.php', 'post');
+    $sform->addElement(new XoopsFormText(_DB_DBASE, 'db_name', 50, 255, ""), true);
+    $button_tray = new XoopsFormElementTray('' ,'');
+    $submit_btn = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
+    $button_tray->addElement($submit_btn);
+    $sform->addElement($button_tray);
+    $sform->display();
+    }
+    //$submit_btn = new XoopsFormButton('', 'post', _SUBMIT, 'submit');
+    //$button_tray->addElement($submit_btn);
+    //$sform->addElement($button_tray);
+    //$sform->display();
 include 'admin_footer.php';
-
-?>

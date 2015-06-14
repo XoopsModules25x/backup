@@ -32,7 +32,6 @@ $modversion['min_admin']= "1.1";
 $modversion['min_db']= array('mysql'=>'5.0.7', 'mysqli'=>'5.0.7');
 $modversion['system_menu'] = 1;
 
-
 // Admin things
 $modversion['hasAdmin'] = 1;
 $modversion['adminindex'] = "admin/index.php";
@@ -120,8 +119,8 @@ $tables = mysql_query($sql);
 $num_tables = @mysql_numrows($tables);
 $options = array(_NONE=>"0", _ALL=>"1");
 for($i=0; $i<$num_tables; $i++){
-	$name = mysql_tablename($tables, $i);
-	$options[$name] = $name;
+    $name = mysql_tablename($tables, $i);
+    $options[$name] = $name;
 }
 $i++;
 $modversion['config'][$i]['name'] = 'dbfiles_split';
@@ -142,4 +141,3 @@ $modversion['config'][$i]['default'] = 0;
 if(!file_exists(XOOPS_ROOT_PATH."/uploads/backup")) {
 mkdir(XOOPS_ROOT_PATH."/uploads/backup", 0755);
 }
-?>

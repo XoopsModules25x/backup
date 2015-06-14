@@ -1,12 +1,9 @@
 <?php
 /* $Id: build_dump.lib.php,v 1.17 2002/02/17 11:59:04 loic1 Exp $ */
 
-
 /**
  * Set of functions used to build dumps of tables
  */
-
-
 
 if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
     define('PMA_BUILD_DUMP_LIB_INCLUDED', 1);
@@ -27,8 +24,8 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
                           $is_modify_link = TRUE, $back_url = '')
     {
 
-    	include($xoopsConfig['root_path']."header.php");
-   		opentable();
+        include($xoopsConfig['root_path']."header.php");
+        opentable();
 
         if (!$error_message) {
             $error_message = mysql_error();
@@ -66,8 +63,8 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
             echo '<a href="' . $back_url . '">' . $GLOBALS['strBack'] . '</a>';
         }
         echo "\n";
-		closetable();
-    	include($xoopsConfig['root_path']."header.php");
+        closetable();
+        include($xoopsConfig['root_path']."header.php");
         exit();
     } // end of the 'PMA_mysqlDie()' function
 
@@ -87,7 +84,7 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
      *
      * @param   string   the string to format
      *
-     * @return  string   the formatted string
+     * @return string the formatted string
      *
      * @access  private
      */
@@ -101,7 +98,7 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
      * @param   string   the end of line sequence
      * @param   string   the url to go back in case of error
      *
-     * @return  string   the CREATE statement on success
+     * @return string the CREATE statement on success
      *
      * @global  boolean  whether to add 'drop' statements or not
      * @global  boolean  whether to use backquotes to allow the use of special
@@ -136,6 +133,7 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
                 $schema_create .= str_replace("\n", $crlf, $tmpres[1]);
             }
             mysql_free_result($result);
+
             return $schema_create;
         } // end if MySQL >= 3.23.20
 
@@ -221,7 +219,7 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
      *                   ($sql_insert)
      * @param   string   the url to go back in case of error
      *
-     * @return  boolean  always true
+     * @return boolean always true
      *
      * @global  boolean  whether to use backquotes to allow the use of special
      *                   characters in database, table and fields names or not
@@ -347,7 +345,7 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
      *                   ($sql_insert)
      * @param   string   the url to go back in case of error
      *
-     * @return  boolean  always true
+     * @return boolean always true
      *
      * @global  boolean  whether to use backquotes to allow the use of special
      *                   characters in database, table and fields names or not
@@ -495,4 +493,4 @@ if (!defined('PMA_BUILD_DUMP_LIB_INCLUDED')){
         }
     } // end of the 'PMA_getTableContent()' function
 } // $__PMA_BUILD_DUMP_LIB__
-?>
+;

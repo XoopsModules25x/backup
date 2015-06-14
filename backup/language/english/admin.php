@@ -26,10 +26,9 @@ installation:<ol>
 <li>If you would create a cron job so that the database can be automatically backup, the URL shall be: YourXoopsUrl/modules/backup/admin/backup.php
 </ol>
 
-Authors:<ul> 
+Authors:<ul>
 <li>backup -- webmaster@nagl.ch ( http://www.nagl.ch )
 <li>restore (bigdump) -- Alexey Ozerov (alexey at ozerov dot de)
 <li>Integration and improvement: D.J. (phppp, http://xoops.org.cn)
 </ul>
 ");
-?>
