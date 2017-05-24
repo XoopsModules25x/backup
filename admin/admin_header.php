@@ -16,7 +16,7 @@ $moduleInfo =& $module_handler->get($xoopsModule->getVar('mid'));
 $pathIcon16 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons16');
 $pathIcon32 = XOOPS_URL .'/'. $moduleInfo->getInfo('icons32');
 
-$myts =& MyTextSanitizer::getInstance();
+$myts = MyTextSanitizer::getInstance();
 
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
     include_once XOOPS_ROOT_PATH . '/class/template.php' ;
