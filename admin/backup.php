@@ -199,7 +199,7 @@ foreach($files_backup as $fl => $names){
         $message .= XOOPS_URL."/uploads/backup/".$filename.'.'.$ext."\n\n";
         $message .= "------------------\n";
         $message .= $xoopsConfig['sitename']."\n".$xoopsConfig['xoops_url']."/";
-        $xoopsMailer =& xoops_getMailer();
+        $xoopsMailer = xoops_getMailer();
         $xoopsMailer->useMail();
         $emails = explode(',',$xoopsModuleConfig['email_to']);
         foreach ($emails as $key=>$value) { $emails[$key]=trim($value); }
